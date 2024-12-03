@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Numeração de CTO - Infraestrutura CN</title>
+    <style>
+        /* Estilo básico para a página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(to right, #0062ff, #67ff0f);
+            color: #000;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label, p {
+            margin-top: 10px;
+        }
+        .input-group {
+            margin-top: 10px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #000;
+        }
+        .btn {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e0f7fa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .result-box h3 {
+            font-size: 1.5em;
+            color: #045199;
+            text-align: center;
+        }
+        .result-box p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        .result-box p span {
+            font-weight: bold;
+            color: #004d40;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .btn {
+                width: 100%;
+                padding: 12px;
+            }
+            .result-box {
+                padding: 15px;
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Controle de Numeração de CTO - Infraestrutura CN</h2>
+        <div class="input-group">
+            <label for="numero">Número:</label>
+            <input type="text" id="numero" placeholder="Digite o número">
+        </div>
+        <div class="input-group">
+            <label for="descricao">Feito por:</label>
+            <input type="text" id="descricao" placeholder="Digite o nome do técnico">
+        </div>
+        <div class="input-group">
+            <label for="data">Data:</label>
+            <input type="date" id="data">
+        </div>
+        <div class="input-group">
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" placeholder="Digite a cidade">
+        </div>
+        <button class="btn" onclick="salvarDados()">Salvar</button>
+        
+        <div class="result-box">
+            <h3>Último número utilizado:</h3>
+            <p id="numeroArmazenado"><span>Número:</span> Nenhum número armazenado ainda.</p>
+            <p id="descricaoArmazenada"><span>Feito por:</span> Nenhuma descrição armazenada ainda.</p>
+            <p id="dataArmazenada"><span>Data:</span> Nenhuma data armazenada ainda.</p>
+            <p id="cidadeArmazenada"><span>Cidade:</span> Nenhuma cidade armazenada ainda.</p>
+        </div>
+    </div>
+
+    <script>
+        // Carregar dados ao iniciar a página
+        document.addEventListener("DOMContentLoaded", function() {
+            carregarDados();
+        });
+
+        // Função para salvar dados no localStorage
+        function salvarDados() {
+            const numero = document.getElementById('numero').value;
+            const descricao = document.getElementById('descricao').value;
+            const data = document.getElementById('data').value;
+            const cidade = document.getElementById('cidade').value;
+
+            if (numero && descricao && data && cidade) {
+                localStorage.setItem('numero', numero);
+                localStorage.setItem('descricao', descricao);
+                localStorage.setItem('data', data);
+                localStorage.setItem('cidade', cidade);
+
+                carregarDados(); // Atualizar a exibição dos dados
+                alert("Dados salvos com sucesso!");
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
+        }
+
+        // Função para carregar dados do localStorage
+        function carregarDados() {
+            const numero = localStorage.getItem('numero');
+            const descricao = localStorage.getItem('descricao');
+            const data = localStorage.getItem('data');
+            const cidade = localStorage.getItem('cidade');
+
+            if (numero && descricao && data && cidade) {
+                document.getElementById('numeroArmazenado').innerText = "Número: " + numero;
+                document.getElementById('descricaoArmazenada').innerText = "Feito por: " + descricao;
+                document.getElementById('dataArmazenada').innerText = "Data: " + data;
+                document.getElementById('cidadeArmazenada').innerText = "Cidade: " + cidade;
+            }
+        }
+    </script>
+</body>
+</html>

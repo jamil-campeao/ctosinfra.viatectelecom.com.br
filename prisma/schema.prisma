@@ -1,0 +1,40 @@
+model Tecnico {
+  TEC_CODIGO        Int      @id @default(autoincrement())
+  TEC_NOME      String
+  TEC_SITUACAO  Int
+
+  //Relacionamento
+  cto CTO[] //Um técnico pode ter vários CTOs
+
+}
+
+model Cidade {
+  CID_CODIGO   Int      @id @default(autoincrement())
+  CID_NOME     String
+  CID_UF       String
+  CID_CEP      String?
+  CID_IBGE     String
+
+    //Relacionamento
+  cto  CTO[] //Uma cidade pode ter vários CTOs
+}
+
+model CTO {
+  CTO_CODIGO Int @id @default(autoincrement())
+  TEC_CODIGO     Int
+  CTO_DATA   DateTime
+  CID_CODIGO Int
+
+  //Relacionamentos
+  tecnico Tecnico @relation(fields: [TEC_CODIGO], references: [TEC_CODIGO])
+  cidade  Cidade  @relation(fields: [CID_CODIGO], references: [CID_CODIGO])
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
